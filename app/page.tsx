@@ -120,11 +120,7 @@ export default function Home() {
                 className="text-gray-400 space-y-2 mt-4"
               >
                 <p className="font-figtree">
-                  I&apos;m a <span className="text-white font-medium">Web Developer</span>. Big deal, right? But wait
-                  — there&apos;s more! I&apos;m not just any developer, I&apos;m a{" "}
-                  <span className="text-white font-medium">Full Stack Developer</span>. And if that wasn&apos;t enough,
-                  guess what? maybe <span className="text-white font-medium">Freelancer?</span> Oh yeah, I&apos;ve got
-                  that badge too!
+                  I&apos;m a <span className="text-white font-medium">Front-End Developer</span> with a growing interest in AI and a mind that&apos;s constantly buzzing with project ideas. I love sharing my thoughts and creations with people So, I&apos;m building a tool where people like me can share their ideas freely, connect with others, and maybe even bring those ideas to life together. Outside of code, you&apos;ll find me listening to music and designing for fun.
                 </p>
 
                 <p className="pt-4 font-figtree">
