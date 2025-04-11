@@ -46,18 +46,17 @@ export default function Home() {
           description: "AI Git and GitHub helper, README generator and more",
           link: "https://gitfriend.xyz",
         },
-        { title: "Linkslide", description: "LinkedIn carousel generator", link: "https://linkslide.dev" },
+        { title: "Linkslide", description: "LinkedIn carousel generator", link: "https://linkslide.vercel.app" },
         { title: "Retrova", description: "Polaroid effect generator", link: "https://retrova.dev" },
-        { title: "DevNotes", description: "Note-taking app for developers", link: "https://devnotes.app" },
       ])
 
       setLoading(false)
       setShowIntro(true)
 
       // Sequence the animations
-      setTimeout(() => setShowName(true), 500) // Show name after intro
-      setTimeout(() => setShowDescription(true), 1000) // Show description after name
-      setTimeout(() => setShowProjects(true), 1500) // Show projects after description
+      setTimeout(() => setShowName(true), 500) 
+      setTimeout(() => setShowDescription(true), 1000) 
+      setTimeout(() => setShowProjects(true), 1500) 
     }
 
     loadProjects()
@@ -161,21 +160,13 @@ export default function Home() {
 
         {showProjects && (
           <footer className="flex gap-4 mt-8">
-            <motion.div
-              initial={{ opacity: 0, filter: "blur(10px)" }}
-              animate={{ opacity: 1, filter: "blur(0px)" }}
-              transition={{ duration: 0.5 }}
-            >
-              <a href="https://twitter.com/krishnakant" aria-label="Twitter" className="text-gray-400 hover:text-white">
-                <Twitter size={20} />
-              </a>
-            </motion.div>
+            
             <motion.div
               initial={{ opacity: 0, filter: "blur(10px)" }}
               animate={{ opacity: 1, filter: "blur(0px)" }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <a href="https://github.com/krishnakant" aria-label="GitHub" className="text-gray-400 hover:text-white">
+              <a href="https://github.com/krishn404" aria-label="GitHub" className="text-gray-400 hover:text-white">
                 <Github size={20} />
               </a>
             </motion.div>
@@ -185,7 +176,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <a
-                href="https://linkedin.com/in/krishnakant"
+                href="https://linkedin.com/in/krishn404"
                 aria-label="LinkedIn"
                 className="text-gray-400 hover:text-white"
               >
