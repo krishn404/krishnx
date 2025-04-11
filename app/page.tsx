@@ -40,14 +40,14 @@ export default function Home() {
       await new Promise((resolve) => setTimeout(resolve, 1500))
 
       setProjects([
-        { title: "Genxie", description: "AI document generator", link: "https://genxie.dev" },
+        { title: "Genxie", description: "AI document generator", link: "https://genxie.vercel,app" },
         {
           title: "GitFriend",
           description: "AI Git and GitHub helper, README generator and more",
           link: "https://gitfriend.xyz",
         },
         { title: "Linkslide", description: "LinkedIn carousel generator", link: "https://linkslide.vercel.app" },
-        { title: "Retrova", description: "Polaroid effect generator", link: "https://retrova.dev" },
+        { title: "Retrova", description: "Polaroid effect generator", link: "https://retrova.vercel,app" },
       ])
 
       setLoading(false)
@@ -188,7 +188,7 @@ export default function Home() {
               animate={{ opacity: 1, filter: "blur(0px)" }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <a href="mailto:hello@krishnakant.dev" aria-label="Email" className="text-gray-400 hover:text-white">
+              <a href="mailto:maharshikrishnakant@gmail.com" aria-label="Email" className="text-gray-400 hover:text-white">
                 <Mail size={20} />
               </a>
             </motion.div>

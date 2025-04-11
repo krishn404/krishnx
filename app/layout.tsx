@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Krishna Kant | Front-end Developer",
   description: "Front-end developer with expertise in Next.js, React, TypeScript, and JavaScript",
-    generator: 'v0.dev'
+    generator: 'v0.vercel,app'
 }
 
 export default function RootLayout({
