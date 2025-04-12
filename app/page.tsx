@@ -1,25 +1,13 @@
 "use client"
 
 import { ProjectCard } from "@/components/project-card"
-import { Github, Linkedin, Mail, Twitter } from "lucide-react"
+import { Github, Linkedin, Mail } from "lucide-react"
 import { AnimatedText } from "@/components/animated-text"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
+import { BottomBar } from "@/components/bottom-bar"
+import Head from "next/head"
 
-// Add this at the top of your component to import the Doto font
-// The style tag will be added to the document head when this component renders
-const DotoFontImport = () => {
-  return (
-    <style jsx global>{`
-      @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&display=swap');
-      
-      /* Define the font-doto class that you're already using */
-      .font-doto {
-        font-family: 'Doto', sans-serif;
-      }
-    `}</style>
-  );
-};
 
 interface Project {
   title: string
@@ -40,23 +28,23 @@ export default function Home() {
       await new Promise((resolve) => setTimeout(resolve, 1500))
 
       setProjects([
-        { title: "Genxie", description: "AI document generator", link: "https://genxie.vercel,app" },
+        { title: "Genxie", description: "AI document generator", link: "https://genxie.vercel.app" }, // Fixed typo in URL
         {
           title: "GitFriend",
           description: "AI Git and GitHub helper, README generator and more",
           link: "https://gitfriend.xyz",
         },
         { title: "Linkslide", description: "LinkedIn carousel generator", link: "https://linkslide.vercel.app" },
-        { title: "Retrova", description: "Polaroid effect generator", link: "https://retrova.vercel,app" },
+        { title: "Retrova", description: "Polaroid effect generator", link: "https://retrova.vercel.app" }, // Fixed typo in URL
       ])
 
       setLoading(false)
       setShowIntro(true)
 
       // Sequence the animations
-      setTimeout(() => setShowName(true), 500) 
-      setTimeout(() => setShowDescription(true), 1000) 
-      setTimeout(() => setShowProjects(true), 1500) 
+      setTimeout(() => setShowName(true), 500)
+      setTimeout(() => setShowDescription(true), 1000)
+      setTimeout(() => setShowProjects(true), 1500)
     }
 
     loadProjects()
@@ -64,12 +52,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <DotoFontImport />
-      
-      <main className="px-5 py-10 max-w-2xl mx-auto">
-        <header className="flex justify-end items-center mb-8">
-        </header>
+      <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet" />
+      </Head>
 
+      <main className="px-5 py-10 pb-32 max-w-2xl mx-auto relative">
         {showIntro && (
           <section className="mb-4">
             <div className="space-y-2">
@@ -82,7 +71,7 @@ export default function Home() {
                 Hey! It&apos;s me{" "}
                 <motion.span
                   animate={{ rotate: [0, 15, -15, 0], y: [0, -5, 0] }}
-                  transition={{ duration: 1, repeat: Infinity, repeatType: "loop" }}
+                  transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, repeatType: "loop" }}
                 >
                   👋
                 </motion.span>
@@ -100,7 +89,7 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="flex items-center gap-2"
               >
-                <h1 className="text-4xl font-doto tracking-wide">
+                <h1 className="text-4xl font-dosis tracking-wide">
                   <AnimatedText text="KRISHNA" delay={0.2} />
                 </h1>
                 <span className="text-gray-500 font-jetbrains">/</span>
@@ -120,7 +109,11 @@ export default function Home() {
                 className="text-gray-400 space-y-2 mt-4"
               >
                 <p className="font-figtree">
-                  I&apos;m a <span className="text-white font-medium">Front-End Developer</span> with a growing interest in AI and a mind that&apos;s constantly buzzing with project ideas. I love sharing my thoughts and creations with people So, I&apos;m building a tool where people like me can share their ideas freely, connect with others, and maybe even bring those ideas to life together. Outside of code, you&apos;ll find me listening to music and designing for fun.
+                  I&apos;m a <span className="text-white font-medium">Front-End Developer</span> with a growing interest
+                  in AI and a mind that&apos;s constantly buzzing with project ideas. I love sharing my thoughts and
+                  creations with people So, I&apos;m building a tool where people like me can share their ideas freely,
+                  connect with others, and maybe even bring those ideas to life together. Outside of code, you&apos;ll
+                  find me listening to music and designing for fun.
                 </p>
 
                 <p className="pt-4 font-figtree">
@@ -156,7 +149,6 @@ export default function Home() {
 
         {showProjects && (
           <footer className="flex gap-4 mt-8">
-            
             <motion.div
               initial={{ opacity: 0, filter: "blur(10px)" }}
               animate={{ opacity: 1, filter: "blur(0px)" }}
@@ -184,13 +176,19 @@ export default function Home() {
               animate={{ opacity: 1, filter: "blur(0px)" }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <a href="mailto:maharshikrishnakant@gmail.com" aria-label="Email" className="text-gray-400 hover:text-white">
+              <a
+                href="mailto:maharshikrishnakant@gmail.com"
+                aria-label="Email"
+                className="text-gray-400 hover:text-white"
+              >
                 <Mail size={20} />
               </a>
             </motion.div>
           </footer>
         )}
       </main>
+
+      <BottomBar />
     </div>
   )
 }
