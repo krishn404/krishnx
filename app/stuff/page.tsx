@@ -58,6 +58,24 @@ const items = [
     link: 'https://open.spotify.com/album/4xuylSoWI5ZCznQpJZa3t7?si=KmF3G2oNQ_SaquKjdG6OhA',
     title: 'Item 8',
     description: 'Aashiyana'
+  },
+  {
+    image: 'stuff/10.jpg',
+    link: 'https://open.spotify.com/album/4dvt5WMfrERMldvONUrT2T?si=3ZYdMNWgQPev4imhHmSlSg',
+    title: 'Item 9',
+    description: 'Reply'
+  },
+  {
+    image: 'stuff/11.jpg',
+    link: 'https://open.spotify.com/album/3yD6313QADntGNdwEEcaae?si=l3iMX3KwR8GXLWSluupV7w',
+    title: 'Item 9',
+    description: 'Im That G'
+  },
+  {
+    image: 'stuff/12.png',
+    link: 'https://open.spotify.com/album/7i0XvpTTMshJeHdJ1ckTAa?si=e6TZvXeUQauKLB6NAEHaoQ',
+    title: 'Item 9',
+    description: 'Vecna'
   }
 ];
 

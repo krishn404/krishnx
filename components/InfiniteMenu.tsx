@@ -1282,7 +1282,9 @@ const InfiniteMenu: FC<InfiniteMenuProps> = ({ items = [] }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(
     null
   ) as MutableRefObject<HTMLCanvasElement | null>;
-  const [activeItem, setActiveItem] = useState<MenuItem | null>(null);
+  const [activeItem, setActiveItem] = useState<MenuItem | null>(
+    (items.length ? items : defaultItems)[0] || null
+  );
   const [isMoving, setIsMoving] = useState<boolean>(false);
 
   useEffect(() => {
