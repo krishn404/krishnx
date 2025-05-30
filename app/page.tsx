@@ -1,7 +1,7 @@
 "use client"
 
 import { ProjectCard } from "@/components/project-card"
-import { Github, Linkedin, Mail } from "lucide-react"
+import { Github, Linkedin, Mail, FileText } from "lucide-react"
 import { AnimatedText } from "@/components/animated-text"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
@@ -182,6 +182,22 @@ export default function Home() {
                 className="text-gray-400 hover:text-white"
               >
                 <Mail size={20} />
+              </a>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, filter: "blur(10px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Resume"
+                className="text-gray-400 hover:text-white flex items-center gap-1"
+              >
+                <FileText size={20} />
+                <span>CV</span>
               </a>
             </motion.div>
           </footer>

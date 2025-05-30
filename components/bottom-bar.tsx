@@ -4,7 +4,7 @@
 import type React from "react"
 import { useEffect, useRef } from "react"
 import { motion } from "framer-motion"
-import { Home, Palette, Bot } from "lucide-react"
+import { Home, Palette, Bot, FileText } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -87,6 +87,7 @@ export function BottomBar() {
         <NavItem icon={<Home size={20} />} label="Home" isActive={pathname === "/"} href="/" />
         <NavItem icon={<Palette size={20} />} label="Stuff" isActive={pathname === "/stuff"} href="/stuff" />
         <NavItem icon={<Bot size={20} />} label="KrishnAI" isActive={pathname === "/krishnai"} href="/krishnai" />
+
       </motion.div>
     </div>
   )
