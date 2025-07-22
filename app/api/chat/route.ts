@@ -5,95 +5,110 @@ import { GoogleGenerativeAI } from "@google/generative-ai"
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 
 const krishnaKantContext = `
-Krishna Kant Maharshi is a front-end developer passionate about creating responsive and user-friendly web applications using modern JavaScript frameworks.
+Krishna Kant Maharshi is a software engineer and full-stack developer with a strong focus on engineering productivity, modern web development, and AI-powered tools. He blends technical precision with creative flair, also working as a freelance graphic designer and video editor.
 
 Professional Profile:
-- Front-end developer with hands-on experience in React, Next.js, and Tailwind CSS
-- Skilled in building web applications with a strong focus on UI/UX and performance
-- Experience in contributing to both academic and production-grade projects
-- Constant learner, with a keen interest in AI and modern web technologies
+- Full-stack developer experienced in building scalable and user-focused applications using React, Next.js, Node.js, and TypeScript
+- Specialized in improving developer workflows, writing clean and maintainable code, and debugging complex systems
+- Passionate about building internal tools, AI integrations, and automation to streamline productivity
+- Creative thinker with hands-on skills in visual design, motion graphics, and content creation for brand storytelling
 
 Technical Skills:
-- Programming Languages: JavaScript, HTML5, CSS3
-- Frontend Development: React.js, Next.js, Tailwind CSS, Bootstrap
-- Backend Basics: Node.js, Express.js
-- Tools & Platforms: VS Code, Git, GitHub, NPM, Postman, Vercel, Chrome DevTools
+- Programming Languages: JavaScript, TypeScript, Python, Java, HTML5, CSS3
+- Frameworks & Libraries: React.js, Next.js, Node.js, Express.js, Tailwind CSS
+- Tools & Platforms: Git, GitHub, VS Code, Postman, Vercel, Firebase, Google Cloud Platform
+- Creative Tools: Photoshop, Canva, CapCut, Adobe Premiere Pro, Sora (AI video)
 
 Projects:
-1. Genxie (https://genxie.vercel.app)
-   - Document generator powered by AI (Gemini API)
-   - Allows users to generate, edit, and export documents in PDF/DOCX formats
-   - Built with React and Tailwind CSS
+1. GitFriend – AI GitHub Assistant  
+   [https://gitfriend.xyz]  
+   Built with Next.js, TypeScript, Firebase, and OpenAI (Groq). Offers AI-powered troubleshooting, dynamic README generation, Gitmoji support, and cloud file system. Integrates GitHub via Octokit API.
 
-2. GitFriend (https://gitfriend.xyz)
-   - AI-powered Git and GitHub helper with dynamic README generation
-   - Helps developers understand and manage Git repositories
-   - Uses Octokit and Groq API for data fetching and AI support
+2. FitWell – AI Fitness & Wellness Platform  
+   [https://fit-well.vercel.app]  
+   Delivers personalized fitness plans and wellness guidance using OpenAI. Built with React, Tailwind CSS, and conversational UX.
 
-3. Linkslide (https://linkslide.vercel.app)
-   - LinkedIn carousel generator with customizable templates
-   - Users can edit slides and export as PDFs
-   - Built using React and Tailwind CSS
+3. Genxie – AI Document Generator & Editor  
+   [https://genxie.vercel.app]  
+   A real-time AI document editor using Gemini API. Supports smart editing, content generation, and export in PDF/DOCX formats.
 
-4. Retrova (https://retrova.vercel.app)
-   - Polaroid effect generator for digital photos
-   - Users can add filters, Polaroid-style frames, and custom text
-   - Built with Next.js, React, TypeScript, and Tailwind CSS
+4. Linkslide – LinkedIn Carousel Generator  
+   [https://linkslide.vercel.app]  
+   Users can design and export carousels for social sharing. Custom templates and export-ready visuals.
+
+5. Retrova – Polaroid Photo Effect Tool  
+   [https://retrova.vercel.app]  
+   A fun photo editor that adds retro filters, frames, and typography overlays. Built with Next.js and TypeScript.
 
 Experience:
-- Front-End Developer at Spanco Web Tech (May – July 2024)
-   - Built responsive WordPress theme pages
-   - Collaborated with cross-functional teams to implement features and optimize performance
+- Codemod (Remote, California) — Codemod Trainee (Oct – Nov 2024)  
+   Built automated code transformations for Slate.js; contributed to open source; documented refactoring patterns for large-scale JS migrations.
 
-- Codemod Trainee at Codemod (Oct – Nov 2024)
-   - Worked with Slate and ast-grep for code refactoring
-   - Gained experience in large-scale automated code transformations
+- Spanco Web Tech (Kota) — Front-End Developer (May – Jul 2024)  
+   Developed scalable web UIs and implemented automated testing frameworks. Improved release quality and contributed to technical documentation and system issue triage.
 
 Education:
-- Bachelor of Computer Applications, Career Point University, Kota (2022 – Present)
-   - Studied subjects like OS, Data Structures, DBMS, OOP, Networks, and Web Development
-   - Applied academic concepts through real-world projects
+- Bachelor of Computer Applications  
+  Career Point University, Kota (2022 – Present)  
+  Focused on software engineering, operating systems, DSA, DBMS, networks, and full-stack web development.
 
 Certifications:
-- React Essentials (LinkedIn, 2024)
-- Codemod Kickstart (Codemod, 2024)
+- GitHub Professional Certificate (GitHub, 2024)  
+- Codemod Kickstart (Codemod, 2024)  
+- React Essentials (LinkedIn, 2024)  
 - Postman API Fundamentals (Postman, 2024)
-- GitHub Professional Certificate (GitHub, 2024)
 
-Personal Interests:
-- Enjoys designing clean, interactive interfaces
-- Interested in open-source contributions and AI applications in web dev
-- Passionate about continuous learning and side projects
-- Also participates in hackathons
-`;
+Creative Work:
+- Freelance graphic designer and video editor  
+- Proficient in Adobe Premiere Pro, Photoshop, CapCut, Canva, and AI tools like Sora  
+- Works on brand visuals, promo videos, social media content, and UI animation  
+- Actively seeking freelance and part-time creative opportunities
+
+Interests:
+- Building AI-powered productivity tools
+- Exploring creative tech crossovers in design and code
+- Participating in hackathons and open-source projects
+- Continuously learning new tools and workflows
+`
 
 export async function POST(req: Request) {
   try {
     const { question } = await req.json()
 
-    if (!question || typeof question !== "string") {
-      return NextResponse.json({ error: "Invalid request: question is required" }, { status: 400 })
+    if (!question || typeof question !== "string" || question.trim().length < 3) {
+      return NextResponse.json(
+        { error: "Please provide a valid question about Krishna Kant." },
+        { status: 400 }
+      )
     }
+
+    const sanitizedQuestion = question.trim()
 
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
 
     const prompt = `
-You are an expert assistant. Answer the user's question strictly based on the following context about Krishna Kant. If the question is unrelated to Krishna Kant, politely respond that you're only trained to answer questions about him.
+You are "Krishnai", an AI assistant trained to answer questions strictly about Krishna Kant Maharshi, a software engineer and creative professional.
+
+Use the following context to answer questions in a clear, helpful, and professional tone. If the user's question is not about Krishna Kant, reply with:
+"I'm only trained to answer questions about Krishna Kant Maharshi."
 
 Context:
 ${krishnaKantContext}
 
-User Question:
-${question}
+User's Question:
+"${sanitizedQuestion}"
 `
 
     const result = await model.generateContent(prompt)
     const response = await result.response
-    const text = response.text()
+    const text = await response.text()
 
     return NextResponse.json({ answer: text })
   } catch (error) {
-    console.error("Error processing chat request:", error)
-    return NextResponse.json({ error: "Failed to generate a response" }, { status: 500 })
+    console.error("Krishnai error:", error)
+    return NextResponse.json(
+      { error: "Sorry, something went wrong. Please try again later." },
+      { status: 500 }
+    )
   }
 }
