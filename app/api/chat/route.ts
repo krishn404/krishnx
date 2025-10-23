@@ -2,8 +2,6 @@
 import { NextResponse } from "next/server"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
-
 const krishnaKantContext = `
 Krishna Kant Maharshi is a software engineer and full-stack developer with a strong focus on engineering productivity, modern web development, and AI-powered tools. He blends technical precision with creative flair, also working as a freelance graphic designer and video editor.
 
@@ -71,23 +69,99 @@ Interests:
 - Continuously learning new tools and workflows
 `
 
-export async function POST(req: Request) {
-  try {
-    const { question } = await req.json()
+// Initialize Gemini AI
+let genAI: GoogleGenerativeAI | null = null
 
-    if (!question || typeof question !== "string" || question.trim().length < 3) {
+try {
+  if (process.env.GEMINI_API_KEY) {
+    genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+  }
+} catch (error) {
+  console.error("Failed to initialize Gemini AI:", error)
+}
+
+export async function POST(req: Request) {
+  console.log("=== API Route Called ===")
+  
+  try {
+    // Check if API key is configured
+    if (!process.env.GEMINI_API_KEY) {
+      console.error("GEMINI_API_KEY is not configured")
       return NextResponse.json(
-        { error: "Please provide a valid question about Krishna Kant." },
+        { error: "API key not configured. Please contact support." },
+        { status: 500 }
+      )
+    }
+
+    if (!genAI) {
+      console.error("Gemini AI not initialized")
+      return NextResponse.json(
+        { error: "AI service not initialized. Please try again." },
+        { status: 500 }
+      )
+    }
+
+    // Parse request body
+    let body
+    try {
+      body = await req.json()
+      console.log("Parsed body:", body)
+    } catch (jsonError) {
+      console.error("JSON parse error:", jsonError)
+      return NextResponse.json(
+        { error: "Invalid request format. Please try again." },
         { status: 400 }
       )
     }
 
-    const sanitizedQuestion = question.trim()
+    // Extract and validate question
+    const { question } = body
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
+    console.log("Question received:", question)
+    console.log("Question type:", typeof question)
+    console.log("Question length:", question?.length)
 
-    const prompt = `
-You are "Krishnai", an AI assistant trained to answer questions strictly about Krishna Kant Maharshi, a software engineer and creative professional.
+    // Validation
+    if (!question) {
+      console.log("No question provided")
+      return NextResponse.json(
+        { error: "Please provide a question." },
+        { status: 400 }
+      )
+    }
+
+    if (typeof question !== "string") {
+      console.log("Question is not a string")
+      return NextResponse.json(
+        { error: "Question must be a text string." },
+        { status: 400 }
+      )
+    }
+
+    const trimmedQuestion = question.trim()
+
+    if (trimmedQuestion.length === 0) {
+      console.log("Question is empty after trimming")
+      return NextResponse.json(
+        { error: "Please provide a valid question." },
+        { status: 400 }
+      )
+    }
+
+    if (trimmedQuestion.length < 2) {
+      console.log("Question too short:", trimmedQuestion.length)
+      return NextResponse.json(
+        { error: "Question is too short. Please be more specific." },
+        { status: 400 }
+      )
+    }
+
+    console.log("Validation passed. Processing question:", trimmedQuestion)
+
+    // Generate AI response
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" })
+
+    const prompt = `You are "Krishnai", an AI assistant trained to answer questions strictly about Krishna Kant Maharshi, a software engineer and creative professional.
 
 Use the following context to answer questions in a clear, helpful, and professional tone. If the user's question is not about Krishna Kant, reply with:
 "I'm only trained to answer questions about Krishna Kant Maharshi."
@@ -96,19 +170,60 @@ Context:
 ${krishnaKantContext}
 
 User's Question:
-"${sanitizedQuestion}"
-`
+"${trimmedQuestion}"
+
+Provide a helpful, concise answer based on the context above.`
+
+    console.log("Calling Gemini API...")
 
     const result = await model.generateContent(prompt)
     const response = await result.response
-    const text = await response.text()
+    const text = response.text()
 
-    return NextResponse.json({ answer: text })
-  } catch (error) {
-    console.error("Krishnai error:", error)
+    console.log("Response generated successfully")
+    console.log("Response length:", text.length)
+
+    return NextResponse.json({ 
+      answer: text,
+      success: true 
+    })
+
+  } catch (error: any) {
+    console.error("=== Error in API Route ===")
+    console.error("Error name:", error?.name)
+    console.error("Error message:", error?.message)
+    console.error("Error stack:", error?.stack)
+    
+    // Handle specific Gemini API errors
+    if (error?.message?.includes("API key")) {
+      return NextResponse.json(
+        { error: "API key error. Please contact support." },
+        { status: 500 }
+      )
+    }
+
+    if (error?.message?.includes("quota") || error?.message?.includes("rate limit")) {
+      return NextResponse.json(
+        { error: "Service is temporarily busy. Please try again in a moment." },
+        { status: 429 }
+      )
+    }
+
+    // Generic error
     return NextResponse.json(
-      { error: "Sorry, something went wrong. Please try again later." },
+      { 
+        error: "Sorry, something went wrong. Please try again later.",
+        details: process.env.NODE_ENV === "development" ? error?.message : undefined
+      },
       { status: 500 }
     )
   }
+}
+
+// Handle unsupported methods
+export async function GET() {
+  return NextResponse.json(
+    { error: "Method not allowed. Use POST." },
+    { status: 405 }
+  )
 }
