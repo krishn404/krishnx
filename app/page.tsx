@@ -28,7 +28,7 @@ export default function Home() {
       await new Promise((resolve) => setTimeout(resolve, 1500))
 
       setProjects([
-        { title: "Genxie", description: "AI document generator", link: "https://genxie.vercel.app" }, // Fixed typo in URL
+        { title: "The BlackBombay House", description: "Designed and Developed a website for a music production house based in Mumbai", link: "https://blackbombayhouse.com" }, // Fixed typo in URL
         {
           title: "GitFriend",
           description: "AI Git and GitHub helper, README generator and more",

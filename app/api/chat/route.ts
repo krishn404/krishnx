@@ -26,8 +26,8 @@ Projects:
    [https://fit-well.vercel.app]  
    Delivers personalized fitness plans and wellness guidance using OpenAI. Built with React, Tailwind CSS, and conversational UX.
 
-3. Genxie – AI Document Generator & Editor  
-   [https://genxie.vercel.app]  
+3. The BlackBombay House – Full Stack website for Music Production house based in Mumbai  
+   [https://blackbombayhouse.com]  
    A real-time AI document editor using Gemini API. Supports smart editing, content generation, and export in PDF/DOCX formats.
 
 4. Linkslide – LinkedIn Carousel Generator  
