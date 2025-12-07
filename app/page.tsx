@@ -34,7 +34,7 @@ export default function Home() {
           description: "AI Git and GitHub helper, README generator and more",
           link: "https://gitfriend.xyz",
         },
-        { title: "Linkslide", description: "LinkedIn carousel generator", link: "https://linkslide.vercel.app" },
+        { title: "Reposs", description: "GitHub open source repo finder tool", link: "https://www.reposs.xyz/" },
         { title: "Retrova", description: "Polaroid effect generator", link: "https://retrova.vercel.app" }, // Fixed typo in URL
       ])
 
